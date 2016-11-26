@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <%@ include file="include/header.jsp"%>
     <title>Customer</title>
 </head>
 
