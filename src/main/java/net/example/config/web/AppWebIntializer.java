@@ -2,6 +2,7 @@ package net.example.config.web;
 
 import net.example.config.context.AppContext;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -20,6 +21,8 @@ public class AppWebIntializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(AppContext.class);
         appContext.setServletContext(servletContext);
+
+        servletContext.addListener(new ContextLoaderListener(appContext));
 
         ServletRegistration.Dynamic servlet
                 = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
