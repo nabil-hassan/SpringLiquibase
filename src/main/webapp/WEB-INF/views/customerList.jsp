@@ -7,7 +7,9 @@
 </head>
 
 <body>
-    <h1>Customers</h1>
+    <h1>Spring MVC Customer List</h1>
+    <p>This section illustrates how to bind a list of entities.</p>
+    <hr/>
 </body>
 
 </html>

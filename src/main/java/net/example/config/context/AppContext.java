@@ -1,7 +1,8 @@
 package net.example.config.context;
 
+import net.example.dao.CustomerDAO;
+import net.example.domain.Customer;
 import net.example.service.CustomerService;
-import net.example.validation.CustomerValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
- * The Spring context for the application.
+ * <p>
+ * The Spring context for the application. The top level is the controller-layer, and all beans in this package
+ * are managed via component scan. This allows the dependencies defined in this JavaConfig context to be wired together,
+ * and into the controller layer, via standard autowiring.
+ * </p>
+ *
+ *
  */
 @Configuration
 @EnableWebMvc
@@ -31,13 +41,18 @@ public class AppContext extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public CustomerValidator customerValidator() {
-        return new CustomerValidator();
+    public Map<Long, Customer> customerDataSource() {
+        return new LinkedHashMap<>();
+    }
+
+    @Bean
+    public CustomerDAO customerDAO() {
+        return new CustomerDAO(customerDataSource());
     }
 
     @Bean
     public CustomerService customerService() {
-        return new CustomerService(customerValidator());
+        return new CustomerService(customerDAO());
     }
 
     @Override

@@ -4,8 +4,30 @@ import java.io.Serializable;
 
 public class Customer implements Serializable {
 
+    // TODO: introduce properties which will require a custom formatter
+
+    private Long id;
     private String forename, surname;
     private Integer age;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", forename='" + forename + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        // Not required in a real-life application, where id generation and assignment done via persistence manager.
+        this.id = id;
+    }
 
     public String getForename() {
         return forename;
@@ -14,7 +36,6 @@ public class Customer implements Serializable {
     public void setForename(String forename) {
         this.forename = forename;
     }
-
     public String getSurname() {
         return surname;
     }

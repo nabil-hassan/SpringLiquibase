@@ -5,6 +5,7 @@ package net.example.constants;
  */
 public class JSPView {
 
+    public static final String CUSTOMER_DETAILS = "customerDetails";
     public static final String CUSTOMER_LIST = "customerList";
 
 }

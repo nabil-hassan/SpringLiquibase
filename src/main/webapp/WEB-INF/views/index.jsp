@@ -11,7 +11,11 @@
 
 <div class="main">
     <h1>Where to?</h1>
-    <a href="customerList">Customer List</a>
+
+    <ul>
+        <li> <a href="customerList">Customer List</a> </li>
+        <li> <a href="customerDetails">Add Customer</a> </li>
+    </ul>
 </div>
 
 </body>

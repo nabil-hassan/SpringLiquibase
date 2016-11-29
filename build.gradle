@@ -29,7 +29,7 @@ repositories {
 dependencies {
     // core dependencies
     compile "org.springframework:spring-webmvc:$springVersion"
-    compile "javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:$jstlVersion"
+    compile "jstl:jstl:$jstlVersion"
     compileOnly "javax.servlet:javax.servlet-api:$servletVersion"
 
     // logging dependencies
