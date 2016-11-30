@@ -7,13 +7,13 @@ plugins {
 }
 
 war {
-    archiveName = "springMVC.war"
+    archiveName = "springLiquibase.war"
 }
 
 /** ================================================================================================================
  *                                                 Project Properties
  *  ================================================================================================================ */
-description = "Spring MVC Java Config Project"
+description = "Spring Liquibase Project"
 group = "net.example"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
