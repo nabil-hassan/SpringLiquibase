@@ -14,7 +14,7 @@
 
     <ul>
         <li> <a href="customerList">Customer List</a> </li>
-        <li> <a href="customerDetails">Add Customer</a> </li>
+        <li> <a href="customerForm">Add Customer</a> </li>
     </ul>
 </div>
 
