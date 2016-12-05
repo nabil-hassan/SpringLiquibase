@@ -3,9 +3,11 @@ package net.example.config.context;
 import net.example.dao.CustomerDAO;
 import net.example.domain.Customer;
 import net.example.service.CustomerService;
+import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -44,6 +46,7 @@ public class AppContext extends WebMvcConfigurerAdapter {
     public Map<Long, Customer> customerDataSource() {
         return new LinkedHashMap<>();
     }
+
 
     @Bean
     public CustomerDAO customerDAO() {

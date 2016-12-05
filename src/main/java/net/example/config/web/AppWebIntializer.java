@@ -1,6 +1,7 @@
 package net.example.config.web;
 
 import net.example.config.context.AppContext;
+import net.example.config.context.PersistenceContext;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -20,6 +21,7 @@ public class AppWebIntializer implements WebApplicationInitializer {
 
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(AppContext.class);
+        appContext.register(PersistenceContext.class);
         appContext.setServletContext(servletContext);
 
         servletContext.addListener(new ContextLoaderListener(appContext));
