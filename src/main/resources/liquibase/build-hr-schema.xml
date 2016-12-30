@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <!-- ==========================================================================================================
+         Title: build-hr-schema.xml
+         Date: 12th December 2016
+         Description: Changesets required to create the database schema.
+                      The schema is adapated from Oracle's HR schema
+         ========================================================================================================== -->
+
+    <!-- Create 'countries' table -->
+    <changeSet id="createCountriesTable" author="admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="countries"/>
+            </not>
+        </preConditions>
+
+        <comment>Create the countries table</comment>
+
+        <createTable schemaName="public" tableName="countries">
+            <column name="id" type="numeric(5)" autoIncrement="true"/>
+            <column name="name" type="varchar2(100)"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="countries" columnName="id" columnDataType="numeric(5)"/>
+        
+        <addPrimaryKey tableName="countries" columnNames="id"/>
+    </changeSet>
+
+    <!-- Create 'offices' table -->
+    <changeSet id="createOfficesTable" author="admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="offices"/>
+            </not>
+        </preConditions>
+
+        <comment>Creates the 'offices' table</comment>
+
+
+        <createTable schemaName="public" tableName="offices">
+            <column name="id" type="numeric(5)" autoIncrement="true"/>
+            <column name="country_id" type="numeric(5)"/>
+            <column name="address_line_1" type="varchar2(255)"/>
+            <column name="address_line_2" type="varchar2(255)"/>
+            <column name="town" type="varchar2(100)"/>
+            <column name="county" type="varchar2(100)"/>
+            <column name="postcode" type="varchar2(10)"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="offices" columnName="id" columnDataType="numeric(5)"/>
+        
+        <addPrimaryKey tableName="offices" columnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_country_id" baseTableName="offices" baseColumnNames="country_id"
+                                 referencedTableName="countries" referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Create the 'roles' table -->
+    <changeSet id="createRolesTable" author="admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="public" tableName="roles"/>
+            </not>
+        </preConditions>
+
+        <comment>Creates the 'roles' database table which is reference data for employee roles</comment>
+
+        <createTable schemaName="public" tableName="roles">
+            <column name="id" type="numeric(5)" autoIncrement="true"/>
+            <column name="description" type="varchar2(100)"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="roles" columnName="id" columnDataType="numeric(5)"/>
+
+        <addPrimaryKey tableName="roles" columnNames="id"/>
+    </changeSet>
+
+    <!-- Create 'employees' table -->
+    <changeSet id="createEmployeesTable" author="admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="employees"/>
+            </not>
+        </preConditions>
+
+        <comment>Creates the 'employees' table</comment>
+
+        <createTable schemaName="public" tableName="employees">
+            <column name="id" type="numeric(5)" autoIncrement="true"/>
+            <column name="office_id" type="numeric(5)"/>
+            <column name="role_id" type="numeric(5)"/>
+            <column name="forename" type="varchar2(100)"/>
+            <column name="surname" type="varchar2(100)"/>
+            <column name="email" type="varchar2(100)"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="employees" columnName="id" columnDataType="numeric(5)"/>
+
+        <addPrimaryKey tableName="employees" columnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_office_id" baseTableName="employees" baseColumnNames="office_id"
+                                 referencedTableName="offices" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_role_id" baseTableName="employees" baseColumnNames="role_id"
+                                 referencedTableName="roles" referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Populate Countries -->
+    <changeSet id="populateCountriesData" author="admin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="countries"/>
+        </preConditions>
+
+        <comment>Inserts country data into the 'countries' table.</comment>
+
+        <sqlFile relativeToChangelogFile="true" path="populate-countries.sql"/>
+    </changeSet>
+
+</databaseChangeLog>
